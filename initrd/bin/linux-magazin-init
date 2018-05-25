@@ -20,53 +20,9 @@ echo "Ihnen steht jetzt eine BusyBox-Umgebung zur Verfügung und Ihnen stehen al
 echo ""
 echo "Wie im Artikel beschrieben, können Sie '/dev/sda1' mit der Debian-Installation unter '/boot' einbinden und den enthaltenen Linux-Kernel mit 'kexec' laden und starten."
 echo ""
-echo "kexec -l"
+echo "mount /dev/sda1 /boot"
+echo "cd /boot/boot"
+echo "kexec -l vmlinuz-4.16.0-1-amd64 --append="root=/dev/sda1 console=ttyS0,115200 console=tty0 iomem=relaxed" --initrd=initrd.img-4.16.0-1-amd64"
 echo "kexec -e"
 
-
-while true; do
-	echo "y) Default boot"
-	echo "n) TOTP does not match"
-	echo "r) Recovery boot"
-	echo "u) USB boot"
-	echo "m) Boot menu"
-
-	if ! confirm_totp "Boot mode"; then
-		recovery 'Failed to unseal TOTP'
-	fi
-
-	if [ "$totp_confirm" = "r" ]; then
-		recovery "User requested recovery shell"
-	fi
-
-	if [ "$totp_confirm" = "n" ]; then
-		echo ""
-		echo "To correct clock drift: 'date -s HH:MM:SS'"
-		echo "and save it to the RTC: 'hwclock -w'"
-		echo "then reboot and try again"
-		echo ""
-		recovery "TOTP mismatch"
-	fi
-
-	if [ "$totp_confirm" = "u" ]; then
-		exec /bin/usb-init
-		continue
-	fi
-
-	if [ "$totp_confirm" = "m" ]; then
-		# Try to select a kernel from the menu
-		mount_boot
-		kexec-select-boot -m -b /boot -c "grub.cfg"
-		continue
-	fi
-
-	if [ "$totp_confirm" = "y" -o -n "$totp_confirm" ]; then
-		# Try to boot the default
-		mount_boot
-		kexec-select-boot -b /boot -c "grub.cfg" \
-		|| recovery "Failed default boot"
-	fi
-
-done
-
-recovery "Something failed during boot"
+recovery "Starte Shell"
