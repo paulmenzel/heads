@@ -1,24 +1,13 @@
 #!/bin/sh
-# Boot from a local disk installation
+# Example script for the Linux-Magazin
 
 . /etc/functions
 . /etc/config
 
-mount_boot()
-{
-	# Mount local disk if it is not already mounted
-	if ! grep -q /boot /proc/mounts ; then
-		mount -o ro /boot \
-			|| recovery "Unable to mount /boot"
-	fi
-}
-
-
-# Confirm we have a good TOTP unseal and ask the user for next choice
-echo "Willkommen im initrd für den Coreboot-Artikel im Linux-Magazin."
-echo "Ihnen steht jetzt eine BusyBox-Umgebung zur Verfügung und Ihnen stehen alle Möglichkeiten offen."
+echo "Willkommen im Initrd für den Coreboot-Artikel im Linux-Magazin."
+echo "Ihnen steht jetzt eine BusyBox-Umgebung mit all den Möglichkeiten zur Verfügung. Das heißt, Sie haben Zugriff auf alle Treiber (Dateisystem, Netzwerk, WLAN, …) und können ganz normal Skripte und Programme (SSH, …) benutzen und schreiben."
 echo ""
-echo "Wie im Artikel beschrieben, können Sie '/dev/sda1' mit der Debian-Installation unter '/boot' einbinden und den enthaltenen Linux-Kernel mit 'kexec' laden und starten."
+echo "Wie im Artikel beschrieben, können Sie '/dev/sda1', auf der Debian installiert ist, unter '/boot' einbinden und den Debian-Linux-Kernel mit 'kexec' laden und starten."
 echo ""
 echo "mount /dev/sda1 /boot"
 echo "cd /boot/boot"
