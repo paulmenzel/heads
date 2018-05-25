@@ -3,7 +3,7 @@
 # target platform.
 #modules += make
 
-make_version := 4.2
+make_version := 4.1
 make_dir := make-$(make_version)
 make_tar := make-$(make_version).tar.bz2
 make_url := http://gnu.mirror.constant.com/make/$(make_tar)
