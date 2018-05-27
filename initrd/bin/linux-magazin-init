@@ -4,6 +4,10 @@
 . /etc/functions
 . /etc/config
 
+insmod /lib/modules/libata.ko
+insmod /lib/modules/libahci.ko
+insmod /lib/modules/ahci.ko
+
 echo "Willkommen im Initrd für den Coreboot-Artikel im Linux-Magazin."
 echo "Ihnen steht jetzt eine BusyBox-Umgebung mit all den Möglichkeiten zur Verfügung. Das heißt, Sie haben Zugriff auf alle Treiber (Dateisystem, Netzwerk, WLAN, …) und können ganz normal Skripte und Programme (SSH, …) benutzen und schreiben."
 echo ""
